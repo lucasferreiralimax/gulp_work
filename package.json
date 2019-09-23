@@ -1,0 +1,25 @@
+{
+  "name": "gulp_work",
+  "version": "1.0.0",
+  "description": "Iniciando com Gulp.js em seu workflow",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lucasferreiralimax/gulp_work.git"
+  },
+  "keywords": [
+    "gulp",
+    "javascript",
+    "workflow",
+    "build"
+  ],
+  "author": "lucasferreiralimax",
+  "bugs": {
+    "url": "https://github.com/lucasferreiralimax/gulp_work/issues"
+  },
+  "homepage": "https://github.com/lucasferreiralimax/gulp_work#readme"
+}
