@@ -4,8 +4,7 @@
   "description": "Iniciando com Gulp.js em seu workflow",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "test": "gulp"
+    "start": "gulp"
   },
   "repository": {
     "type": "git",
@@ -21,5 +20,19 @@
   "bugs": {
     "url": "https://github.com/lucasferreiralimax/gulp_work/issues"
   },
-  "homepage": "https://github.com/lucasferreiralimax/gulp_work#readme"
+  "homepage": "https://github.com/lucasferreiralimax/gulp_work#readme",
+  "dependencies": {
+    "gulp": "4.0.2",
+    "gulp-clean": "0.4.0",
+    "gulp-concat": "2.6.1",
+    "gulp-inject": "^5.0.4",
+    "gulp-pug": "^4.0.1",
+    "gulp-uglify-es": "1.0.4"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.6.0",
+    "@babel/preset-env": "^7.6.0",
+    "gulp-babel": "^8.0.0",
+    "gulp-stylus": "^2.7.0"
+  }
 }
