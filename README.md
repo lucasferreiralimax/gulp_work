@@ -1,9 +1,9 @@
 # gulp_work
 
 Um projeto para iniciar com Gulp.js em seu workflow.
-Usando Pug.js, stylus.js e Babel para transpilar o seu javascript.
+Usando Pug.js, stylus.js, imagemin para minificar seus assets e Babel para transpilar o seu javascript.
 
-## Instale o Gulp globamente
+## Instale o Gulp globalmente
 Instale o [Gulp.js](https://gulpjs.com) globalmente em sua máquina
 `npm install gulp-cli -g`
 
