@@ -29,7 +29,7 @@ function css() {
 }
 
 function html() {
-  return src('src/**/*.pug')
+  return src(['src/**/*.pug', '!src/**/[_]*.pug'])
     .pipe(pug({ pretty: true }))
     .pipe(inject(src(['dist/**/*.js', 'dist/**/*.css'], {
       read: false
