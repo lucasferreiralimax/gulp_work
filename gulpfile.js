@@ -2,6 +2,7 @@ const { src, dest, series, watch } = require('gulp')
 const babel = require('gulp-babel')
 const connect = require('gulp-connect')
 const del = require('del')
+const imagemin = require('gulp-imagemin')
 const inject = require('gulp-inject')
 const minifyJS = require('gulp-uglify-es').default
 const pug = require('gulp-pug')
@@ -50,8 +51,15 @@ function js() {
     .pipe(connect.reload())
 }
 
+function img() {
+  return src('src/assets/**/*')
+    .pipe(imagemin())
+    .pipe(dest('dist/assets'))
+    .pipe(connect.reload())
+}
+
 function watchDev(done) {
-  watch(['src/**/*.styl', 'src/**/*.pug', 'src/**/*.js'], series(clean_work, css, js, html))
+  watch(['src/**/*.styl', 'src/**/*.pug', 'src/**/*.js'], series(clean_work, css, js, img, html))
   done()
 }
 
@@ -59,7 +67,8 @@ exports.clean_work = clean_work;
 exports.connect_dist = connect_dist;
 exports.css = css;
 exports.html = html;
+exports.img = img;
 exports.js = js;
 exports.watchDev = watchDev;
 
-exports.default = series(clean_work, css, html, js, connect_dist, watchDev);
+exports.default = series(clean_work, css, img, js, html, connect_dist, watchDev);
