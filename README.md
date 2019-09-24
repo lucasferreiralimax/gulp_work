@@ -17,15 +17,19 @@ Agora para desenvolver execute em seu terminal ou cmd
 
 > `npm run start` ou `gulp`
 
-## Servido local de desenvolvimento minificado
-Agora para desenvolver execute em seu terminal ou cmd
+O servidor local subiu na url `http://localhost:8000`
 
-> `npm run minify` ou `gulp minify`
+## Montando os arquivos minificado para produção
+Agora para minificar execute em seu terminal ou cmd
+
+> `npm run prod` ou `gulp prod`
+
+Os arquivos dentro da pasta ./dist está pronto para ir para produção
 
 ## Limpar diretório compilado
 Execute em seu terminal ou cmd
 
-> `npm run clean` ou `gulp minify`
+> `npm run clean` ou `gulp clean`
 
 Todas as tasks de compilação devem está funcionando
 

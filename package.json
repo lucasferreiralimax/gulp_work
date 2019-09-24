@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "gulp",
-    "minify": "gulp minify",
+    "prod": "gulp prod",
     "clean": "gulp clean"
   },
   "repository": {

@@ -20,7 +20,7 @@ let paths = {
 }
 
 function clean() {
-  return del(`${paths.dist}/**/*`, { force: true })
+  return del(`${paths.dist}`, { force: true })
 }
 
 function connect_dist(done) {
@@ -46,7 +46,6 @@ function cssMinify() {
       compress: true
     }))
     .pipe(dest(paths.dist))
-    .pipe(connect.reload())
 }
 
 function html() {
@@ -72,7 +71,6 @@ function htmlMinify() {
       ignorePath: paths.dist
     }))
     .pipe(dest(paths.dist))
-    .pipe(connect.reload())
 }
 
 function js() {
@@ -91,7 +89,6 @@ function jsMinify() {
     }))
     .pipe(minifyJS())
     .pipe(dest(paths.dist, { sourcemaps: false }))
-    .pipe(connect.reload())
 }
 
 function imgMinify() {
@@ -106,11 +103,6 @@ function watchDev(done) {
   done()
 }
 
-function watchDevMinify(done) {
-  watch(paths.watchFiles, series(clean, cssMinify, jsMinify, imgMinify, htmlMinify))
-  done()
-}
-
 exports.clean = clean
 exports.connect_dist = connect_dist
 exports.css = css
@@ -121,7 +113,6 @@ exports.imgMinify = imgMinify
 exports.js = js
 exports.jsMinify = jsMinify
 exports.watchDev = watchDev
-exports.watchDevMinify = watchDevMinify
 
-exports.minify = series(clean, cssMinify, jsMinify, imgMinify, htmlMinify, connect_dist, watchDevMinify)
+exports.prod = series(clean, cssMinify, jsMinify, imgMinify, htmlMinify)
 exports.default = series(clean, css, js, imgMinify, html, connect_dist, watchDev)
