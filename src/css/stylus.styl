@@ -1,8 +1,14 @@
 @import '_variable'
 
+@keyframes intro
+  0%
+    transform scale(0)
+  100%
+    transform scale(1)
+
 body
   align-items center
-  background color_1
+  background-image radial-gradient(circle at bottom, color_1, color_2 300%)
   color color_2
   display flex
   flex-direction column
@@ -11,3 +17,25 @@ body
   font-size 2em
   justify-content center
   text-align center
+
+h1, a, footer
+  animation intro 1s
+
+strong
+  color color_4
+  cursor crosshair
+  display flex
+  justify-content center
+
+a
+  color color_3
+  text-decoration none
+  transition .5s all
+  &:hover
+    color color_2
+    text-shadow 0 0 30px color_4
+
+footer
+  margin-top 1em
+  a
+    color color_4

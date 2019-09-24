@@ -1,15 +1,16 @@
-html(lang="pt-BR")
-  head
-    meta(charset="UTF-8")
-    title Titulo da Página
-    meta(name="description" content="Web developer Front-end Workflow")
-    meta(name="keywords" content="HTML,CSS,JavaScript,Stylus,Pug,Babel,Gulp")
-    meta(name="author" content="lucasferreiralimax")
-    meta(name="viewport" content="width=device-width, initial-scale=1.0")
-    <!-- inject:css -->
-    <!-- endinject -->
-  body
-    h1 Página de Exemplo
-    p Gulp.js
-    <!-- inject:js -->
-    <!-- endinject -->
+extends template/_layout.pug
+
+block vars
+  - var titulo = ' - Página Principal'
+append head_page  
+  meta(name="description" content="Web developer Front-end Workflow")
+  meta(name="keywords" content="HTML,CSS,JavaScript,Stylus,Pug,Babel,Gulp")
+append content
+  h1 Página Principal
+    strong  gulp_work
+  a(href="https://gulpjs.com" target="_blank") Gulp.js
+  a(href="https://pugjs.org" target="_blank") Pug.js
+  a(href="http://stylus-lang.com" target="_blank") Stylus.js
+  a(href="https://babeljs.io" target="_blank") Babel.js
+  footer
+    a(href="/page/exemplo.html") Clique aqui para segunda página de exemplo
