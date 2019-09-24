@@ -29,9 +29,31 @@ function css() {
     .pipe(connect.reload())
 }
 
+function cssMinify() {
+  return src(['src/**/*.styl', '!src/**/[_]*.styl'])
+    .pipe(stylus({
+      compress: true
+    }))
+    .pipe(dest('dist/'))
+    .pipe(connect.reload())
+}
+
 function html() {
   return src(['src/**/*.pug', '!src/**/[_]*.pug'])
     .pipe(pug({ pretty: true }))
+    .pipe(inject(src(['dist/**/*.js', 'dist/**/*.css'], {
+      read: false
+    }), {
+      relative: false,
+      ignorePath: '/dist'
+    }))
+    .pipe(dest('dist/'))
+    .pipe(connect.reload())
+}
+
+function htmlMinify() {
+  return src(['src/**/*.pug', '!src/**/[_]*.pug'])
+    .pipe(pug({ pretty: false }))
     .pipe(inject(src(['dist/**/*.js', 'dist/**/*.css'], {
       read: false
     }), {
@@ -51,7 +73,17 @@ function js() {
     .pipe(connect.reload())
 }
 
-function img() {
+function jsMinify() {
+  return src('src/**/*.js', { sourcemaps: false })
+    .pipe(babel({
+      presets: ['@babel/env']
+    }))
+    .pipe(minifyJS())
+    .pipe(dest('dist/', { sourcemaps: false }))
+    .pipe(connect.reload())
+}
+
+function imgMinify() {
   return src('src/assets/**/*')
     .pipe(imagemin())
     .pipe(dest('dist/assets'))
@@ -59,16 +91,26 @@ function img() {
 }
 
 function watchDev(done) {
-  watch(['src/**/*.styl', 'src/**/*.pug', 'src/**/*.js'], series(clean_work, css, js, img, html))
+  watch(['src/**/*.styl', 'src/**/*.pug', 'src/**/*.js'], series(clean_work, css, js, imgMinify, html))
   done()
 }
 
-exports.clean_work = clean_work;
-exports.connect_dist = connect_dist;
-exports.css = css;
-exports.html = html;
-exports.img = img;
-exports.js = js;
-exports.watchDev = watchDev;
+function watchDevMinify(done) {
+  watch(['src/**/*.styl', 'src/**/*.pug', 'src/**/*.js'], series(clean_work, cssMinify, jsMinify, imgMinify, htmlMinify))
+  done()
+}
 
-exports.default = series(clean_work, css, img, js, html, connect_dist, watchDev);
+exports.clean_work = clean_work
+exports.connect_dist = connect_dist
+exports.css = css
+exports.cssMinify = cssMinify
+exports.html = html
+exports.htmlMinify = htmlMinify
+exports.imgMinify = imgMinify
+exports.js = js
+exports.jsMinify = jsMinify
+exports.watchDev = watchDev
+exports.watchDevMinify = watchDevMinify
+
+exports.minify = series(clean_work, cssMinify, imgMinify, jsMinify, htmlMinify, connect_dist, watchDevMinify)
+exports.default = series(clean_work, css, imgMinify, js, html, connect_dist, watchDev)
