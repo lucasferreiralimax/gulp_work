@@ -2,10 +2,10 @@ extends ../template/_layout.pug
 
 block vars
   - var titulo = ' - Página Exemplo'
-append head_page  
+block head_page  
   meta(name="description" content="Web developer Front-end lucasferreiralimax")
   meta(name="keywords" content="HTML,CSS,JavaScript,lucasferreiralimax")
-append content
+block content
   h1
     a(href="/") Página de Exemplo
       strong  gulp_work

@@ -2,10 +2,10 @@ extends template/_layout.pug
 
 block vars
   - var titulo = ' - Página Principal'
-append head_page  
+block head_page  
   meta(name="description" content="Web developer Front-end Workflow")
   meta(name="keywords" content="HTML,CSS,JavaScript,Stylus,Pug,Babel,Gulp")
-append content
+block content
   h1 Página Principal
     strong  gulp_work
   a(href="https://gulpjs.com" target="_blank") Gulp.js
