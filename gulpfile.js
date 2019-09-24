@@ -1,14 +1,14 @@
-const { src, dest, series, watch, parallel } = require('gulp');
-const babel = require('gulp-babel');
-const connect = require('gulp-connect');
-const del = require('del');
-const inject = require('gulp-inject');
-const minifyJS = require('gulp-uglify-es').default;
-const pug = require('gulp-pug');
-const stylus = require('gulp-stylus');
+const { src, dest, series, watch } = require('gulp')
+const babel = require('gulp-babel')
+const connect = require('gulp-connect')
+const del = require('del')
+const inject = require('gulp-inject')
+const minifyJS = require('gulp-uglify-es').default
+const pug = require('gulp-pug')
+const stylus = require('gulp-stylus')
 
 function clean_work() {
-  return del('dist/**/*', {force:true})
+  return del('dist/**/*', { force: true })
 }
 
 function connect_dist(done) {
