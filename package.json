@@ -11,10 +11,10 @@
     "url": "git+https://github.com/lucasferreiralimax/gulp_work.git"
   },
   "keywords": [
+    "build",
     "gulp",
     "javascript",
-    "workflow",
-    "build"
+    "workflow"
   ],
   "author": "lucasferreiralimax",
   "bugs": {
@@ -25,7 +25,6 @@
     "@babel/core": "^7.6.0",
     "@babel/preset-env": "^7.6.0",
     "del": "^5.1.0",
-    "gulp": "4.0.2",
     "gulp-babel": "^8.0.0",
     "gulp-clean": "0.4.0",
     "gulp-concat": "2.6.1",
@@ -33,6 +32,7 @@
     "gulp-inject": "^5.0.4",
     "gulp-pug": "^4.0.1",
     "gulp-stylus": "^2.7.0",
-    "gulp-uglify-es": "1.0.4"
+    "gulp-uglify-es": "1.0.4",
+    "gulp": "4.0.2"
   }
 }
