@@ -5,13 +5,35 @@ Usando Pug.js, stylus.js, imagemin para minificar seus assets e Babel para trans
 
 ## Instale o Gulp globalmente
 Instale o [Gulp.js](https://gulpjs.com) globalmente em sua máquina
-`npm install gulp-cli -g`
+
+> `npm install gulp-cli -g`
 
 E também instale localmente as dependências
-`npm install`
 
-## Development server
-Agora para desenvolver apenas rode
-`npm start` ou `gulp`
+> `npm install`
 
-Pronto deve está funcionando com todas as tasks de compilação
+## Servido local de desenvolvimento
+Agora para desenvolver execute em seu terminal ou cmd
+
+> `npm run start` ou `gulp`
+
+## Servido local de desenvolvimento minificado
+Agora para desenvolver execute em seu terminal ou cmd
+
+> `npm run minify` ou `gulp minify`
+
+Todas as tasks de compilação devem está funcionando
+
+> Se tiver problemas [abra uma nova issue aqui](https://github.com/lucasferreiralimax/gulp_work/issues/new)
+
+### :performing_arts: Com quem você pode conversar sobre o projeto?
+#### Who can you talk to about the project?
+#### ¿Con quién puedes hablar sobre el proyecto?
+#### С кем вы можете поговорить о проекте?
+#### 誰がプロジェクトについて話すことができますか？
+#### À qui pouvez-vous parler du projet?
+#### Projeyle ilgili kim konuşabilirsin?
+#### 你能谈谈这个项目吗？
+
+* :ghost: @lucasferreiralimax
+* :email: lucasferreiralimax@gmail.com
