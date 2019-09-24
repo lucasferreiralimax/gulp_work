@@ -22,6 +22,11 @@ Agora para desenvolver execute em seu terminal ou cmd
 
 > `npm run minify` ou `gulp minify`
 
+## Limpar diretório compilado
+Execute em seu terminal ou cmd
+
+> `npm run clean` ou `gulp minify`
+
 Todas as tasks de compilação devem está funcionando
 
 > Se tiver problemas [abra uma nova issue aqui](https://github.com/lucasferreiralimax/gulp_work/issues/new)

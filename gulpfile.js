@@ -8,8 +8,19 @@ const minifyJS = require('gulp-uglify-es').default
 const pug = require('gulp-pug')
 const stylus = require('gulp-stylus')
 
-function clean_work() {
-  return del('dist/**/*', { force: true })
+let paths = {
+  css: ['src/**/*.styl', '!src/**/[_]*.styl'],
+  dist: "dist",
+  html: {
+    inject: ['dist/**/*.js', 'dist/**/*.css'],
+    pug: ['src/**/*.pug', '!src/**/[_]*.pug']
+  },
+  js: 'src/**/*.js',
+  watchFiles: ['src/**/*.styl', 'src/**/*.pug', 'src/**/*.js']
+}
+
+function clean() {
+  return del(`${paths.dist}/**/*`, { force: true })
 }
 
 function connect_dist(done) {
@@ -23,84 +34,84 @@ function connect_dist(done) {
 }
 
 function css() {
-  return src(['src/**/*.styl', '!src/**/[_]*.styl'])
+  return src(paths.css)
     .pipe(stylus())
-    .pipe(dest('dist/'))
+    .pipe(dest(paths.dist))
     .pipe(connect.reload())
 }
 
 function cssMinify() {
-  return src(['src/**/*.styl', '!src/**/[_]*.styl'])
+  return src(paths.css)
     .pipe(stylus({
       compress: true
     }))
-    .pipe(dest('dist/'))
+    .pipe(dest(paths.dist))
     .pipe(connect.reload())
 }
 
 function html() {
-  return src(['src/**/*.pug', '!src/**/[_]*.pug'])
+  return src(paths.html.pug)
     .pipe(pug({ pretty: true }))
-    .pipe(inject(src(['dist/**/*.js', 'dist/**/*.css'], {
+    .pipe(inject(src(paths.html.inject, {
       read: false
     }), {
       relative: false,
-      ignorePath: '/dist'
+      ignorePath: paths.dist
     }))
-    .pipe(dest('dist/'))
+    .pipe(dest(paths.dist))
     .pipe(connect.reload())
 }
 
 function htmlMinify() {
-  return src(['src/**/*.pug', '!src/**/[_]*.pug'])
+  return src(paths.html.pug)
     .pipe(pug({ pretty: false }))
-    .pipe(inject(src(['dist/**/*.js', 'dist/**/*.css'], {
+    .pipe(inject(src(paths.html.inject, {
       read: false
     }), {
       relative: false,
-      ignorePath: '/dist'
+      ignorePath: paths.dist
     }))
-    .pipe(dest('dist/'))
+    .pipe(dest(paths.dist))
     .pipe(connect.reload())
 }
 
 function js() {
-  return src('src/**/*.js', { sourcemaps: false })
+  return src(paths.js, { sourcemaps: false })
     .pipe(babel({
       presets: ['@babel/env']
     }))
-    .pipe(dest('dist/', { sourcemaps: false }))
+    .pipe(dest(paths.dist, { sourcemaps: false }))
     .pipe(connect.reload())
 }
 
 function jsMinify() {
-  return src('src/**/*.js', { sourcemaps: false })
+  return src(paths.js, { sourcemaps: false })
     .pipe(babel({
       presets: ['@babel/env']
     }))
     .pipe(minifyJS())
-    .pipe(dest('dist/', { sourcemaps: false }))
+    .pipe(dest(paths.dist, { sourcemaps: false }))
     .pipe(connect.reload())
 }
 
 function imgMinify() {
   return src('src/assets/**/*')
     .pipe(imagemin())
-    .pipe(dest('dist/assets'))
+    .pipe(dest(`${paths.dist}/assets`))
     .pipe(connect.reload())
 }
 
 function watchDev(done) {
-  watch(['src/**/*.styl', 'src/**/*.pug', 'src/**/*.js'], series(clean_work, css, js, imgMinify, html))
+  watch(paths.watchFiles, series(clean, css, js, imgMinify, html))
   done()
 }
 
 function watchDevMinify(done) {
-  watch(['src/**/*.styl', 'src/**/*.pug', 'src/**/*.js'], series(clean_work, cssMinify, jsMinify, imgMinify, htmlMinify))
+  watch(paths.watchFiles, series(clean, cssMinify, jsMinify, imgMinify, htmlMinify))
   done()
 }
 
-exports.clean_work = clean_work
+exports.clean = clean
 exports.connect_dist = connect_dist
 exports.css = css
 exports.cssMinify = cssMinify
@@ -112,5 +123,5 @@ exports.jsMinify = jsMinify
 exports.watchDev = watchDev
 exports.watchDevMinify = watchDevMinify
 
-exports.minify = series(clean_work, cssMinify, imgMinify, jsMinify, htmlMinify, connect_dist, watchDevMinify)
-exports.default = series(clean_work, css, imgMinify, js, html, connect_dist, watchDev)
+exports.minify = series(clean, cssMinify, jsMinify, imgMinify, htmlMinify, connect_dist, watchDevMinify)
+exports.default = series(clean, css, js, imgMinify, html, connect_dist, watchDev)
