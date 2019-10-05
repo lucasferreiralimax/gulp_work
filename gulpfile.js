@@ -5,6 +5,7 @@ const del = require('del')
 const imagemin = require('gulp-imagemin')
 const inject = require('gulp-inject')
 const minifyJS = require('gulp-uglify-es').default
+const open = require('gulp-open')
 const pug = require('gulp-pug')
 const stylus = require('gulp-stylus')
 
@@ -27,10 +28,15 @@ function connect_dist(done) {
   connect.server({
     name: 'Dist',
     root: 'dist',
-    port: 8000,
+    port: 8080,
     livereload: true
   })
   done()
+}
+
+function openBrowser() {
+  return src(__filename)
+    .pipe(open({uri: 'http://localhost:8080'}))
 }
 
 function css() {
@@ -112,7 +118,8 @@ exports.htmlMinify = htmlMinify
 exports.imgMinify = imgMinify
 exports.js = js
 exports.jsMinify = jsMinify
+exports.openBrowser = openBrowser
 exports.watchDev = watchDev
 
 exports.prod = series(clean, cssMinify, jsMinify, imgMinify, htmlMinify)
-exports.default = series(clean, css, js, imgMinify, html, connect_dist, watchDev)
+exports.default = series(clean, css, js, imgMinify, html, connect_dist, openBrowser, watchDev)
