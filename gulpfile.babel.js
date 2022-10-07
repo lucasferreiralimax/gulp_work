@@ -33,31 +33,14 @@ export const connect_dist = (done) => {
   done()
 }
 
-
-export const css = () => {
-  return src(paths.css)
-    .pipe(stylus())
-    .pipe(dest(paths.dist))
-    .pipe(reload())
-}
-
-export const cssMinify = () => {
-  return src(paths.css)
-    .pipe(stylus({
-      compress: true
-    }))
-    .pipe(dest(paths.dist))
-}
+export const css = () => src(paths.css).pipe(stylus()).pipe(dest(paths.dist)).pipe(reload());
+export const cssMinify = () => src(paths.css).pipe(stylus({ compress: true })).pipe(dest(paths.dist));
+export const imgMinify = () => src('src/assets/**/*').pipe(imagemin()).pipe(dest(`${paths.dist}/assets`)).pipe(reload());
 
 export const html = () => {
   return src(paths.html.pug)
     .pipe(pug({ pretty: true }))
-    .pipe(inject(src(paths.html.inject, {
-      read: false
-    }), {
-      relative: false,
-      ignorePath: paths.dist
-    }))
+    .pipe(inject(src(paths.html.inject, { read: false }), { relative: false, ignorePath: paths.dist }))
     .pipe(dest(paths.dist))
     .pipe(reload())
 }
@@ -65,38 +48,22 @@ export const html = () => {
 export const htmlMinify = () => {
   return src(paths.html.pug)
     .pipe(pug({ pretty: false }))
-    .pipe(inject(src(paths.html.inject, {
-      read: false
-    }), {
-      relative: false,
-      ignorePath: paths.dist
-    }))
+    .pipe(inject(src(paths.html.inject, { read: false }), { relative: false, ignorePath: paths.dist }))
     .pipe(dest(paths.dist))
 }
 
 export const js = () => {
   return src(paths.js, { sourcemaps: false })
-    .pipe(babel({
-      presets: ['@babel/env']
-    }))
+    .pipe(babel({ presets: ['@babel/env'] }))
     .pipe(dest(paths.dist, { sourcemaps: false }))
     .pipe(reload())
 }
 
 export const jsMinify = () => {
   return src(paths.js, { sourcemaps: false })
-    .pipe(babel({
-      presets: ['@babel/env']
-    }))
+    .pipe(babel({ presets: ['@babel/env'] }))
     .pipe(minifyJS())
     .pipe(dest(paths.dist, { sourcemaps: false }))
-}
-
-export const imgMinify = () => {
-  return src('src/assets/**/*')
-    .pipe(imagemin())
-    .pipe(dest(`${paths.dist}/assets`))
-    .pipe(reload())
 }
 
 export const watchDev = (done) => {
