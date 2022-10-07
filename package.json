@@ -24,8 +24,9 @@
   },
   "homepage": "https://github.com/lucasferreiralimax/gulp_work#readme",
   "devDependencies": {
-    "@babel/core": "^7.6.0",
-    "@babel/preset-env": "^7.6.0",
+    "@babel/core": "^7.19.3",
+    "@babel/preset-env": "^7.19.3",
+    "@babel/register": "^7.18.9",
     "del": "^6.0.0",
     "gulp": "4.0.2",
     "gulp-babel": "^8.0.0",
