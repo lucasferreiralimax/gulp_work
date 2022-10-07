@@ -1,13 +1,13 @@
-const { src, dest, series, watch } = require('gulp')
-const babel = require('gulp-babel')
-const connect = require('gulp-connect')
-const del = require('del')
-const imagemin = require('gulp-imagemin')
-const inject = require('gulp-inject')
-const minifyJS = require('gulp-uglify-es').default
-const open = require('gulp-open')
-const pug = require('gulp-pug')
-const stylus = require('gulp-stylus')
+import { src, dest, series, watch } from 'gulp'
+import babel from 'gulp-babel'
+import { server, reload } from 'gulp-connect'
+import del from 'del'
+import imagemin from 'gulp-imagemin'
+import inject from 'gulp-inject'
+import minifyJS from 'gulp-uglify-es'
+import open from 'gulp-open'
+import pug from 'gulp-pug'
+import stylus from 'gulp-stylus'
 
 let paths = {
   css: ['src/**/*.styl', '!src/**/[_]*.styl'],
@@ -20,12 +20,12 @@ let paths = {
   watchFiles: ['src/**/*.styl', 'src/**/*.pug', 'src/**/*.js']
 }
 
-function clean() {
+export function clean() {
   return del(`${paths.dist}`, { force: true })
 }
 
-function connect_dist(done) {
-  connect.server({
+export function connect_dist(done) {
+  server({
     name: 'Dist',
     root: 'dist',
     port: 8080,
@@ -34,19 +34,19 @@ function connect_dist(done) {
   done()
 }
 
-function openBrowser() {
+export function openBrowser() {
   return src(__filename)
     .pipe(open({uri: 'http://localhost:8080'}))
 }
 
-function css() {
+export function css() {
   return src(paths.css)
     .pipe(stylus())
     .pipe(dest(paths.dist))
-    .pipe(connect.reload())
+    .pipe(reload())
 }
 
-function cssMinify() {
+export function cssMinify() {
   return src(paths.css)
     .pipe(stylus({
       compress: true
@@ -54,7 +54,7 @@ function cssMinify() {
     .pipe(dest(paths.dist))
 }
 
-function html() {
+export function html() {
   return src(paths.html.pug)
     .pipe(pug({ pretty: true }))
     .pipe(inject(src(paths.html.inject, {
@@ -64,10 +64,10 @@ function html() {
       ignorePath: paths.dist
     }))
     .pipe(dest(paths.dist))
-    .pipe(connect.reload())
+    .pipe(reload())
 }
 
-function htmlMinify() {
+export function htmlMinify() {
   return src(paths.html.pug)
     .pipe(pug({ pretty: false }))
     .pipe(inject(src(paths.html.inject, {
@@ -79,16 +79,16 @@ function htmlMinify() {
     .pipe(dest(paths.dist))
 }
 
-function js() {
+export function js() {
   return src(paths.js, { sourcemaps: false })
     .pipe(babel({
       presets: ['@babel/env']
     }))
     .pipe(dest(paths.dist, { sourcemaps: false }))
-    .pipe(connect.reload())
+    .pipe(reload())
 }
 
-function jsMinify() {
+export function jsMinify() {
   return src(paths.js, { sourcemaps: false })
     .pipe(babel({
       presets: ['@babel/env']
@@ -97,29 +97,17 @@ function jsMinify() {
     .pipe(dest(paths.dist, { sourcemaps: false }))
 }
 
-function imgMinify() {
+export function imgMinify() {
   return src('src/assets/**/*')
     .pipe(imagemin())
     .pipe(dest(`${paths.dist}/assets`))
-    .pipe(connect.reload())
+    .pipe(reload())
 }
 
-function watchDev(done) {
+export function watchDev(done) {
   watch(paths.watchFiles, series(clean, css, js, imgMinify, html))
   done()
 }
 
-exports.clean = clean
-exports.connect_dist = connect_dist
-exports.css = css
-exports.cssMinify = cssMinify
-exports.html = html
-exports.htmlMinify = htmlMinify
-exports.imgMinify = imgMinify
-exports.js = js
-exports.jsMinify = jsMinify
-exports.openBrowser = openBrowser
-exports.watchDev = watchDev
-
-exports.prod = series(clean, cssMinify, jsMinify, imgMinify, htmlMinify)
-exports.default = series(clean, css, js, imgMinify, html, connect_dist, openBrowser, watchDev)
+export const prod = series(clean, cssMinify, jsMinify, imgMinify, htmlMinify)
+export default series(clean, css, js, imgMinify, html, connect_dist, openBrowser, watchDev)
