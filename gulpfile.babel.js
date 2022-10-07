@@ -9,7 +9,7 @@ import open from 'gulp-open'
 import pug from 'gulp-pug'
 import stylus from 'gulp-stylus'
 
-let paths = {
+const paths = {
   css: ['src/**/*.styl', '!src/**/[_]*.styl'],
   dist: "dist",
   html: {
@@ -20,11 +20,10 @@ let paths = {
   watchFiles: ['src/**/*.styl', 'src/**/*.pug', 'src/**/*.js']
 }
 
-export function clean() {
-  return del(`${paths.dist}`, { force: true })
-}
+export const clean = () => del(`${paths.dist}`, { force: true });
+export const openBrowser = () => src(__filename).pipe(open({uri: 'http://localhost:8080'}));
 
-export function connect_dist(done) {
+export const connect_dist = (done) => {
   server({
     name: 'Dist',
     root: 'dist',
@@ -34,19 +33,15 @@ export function connect_dist(done) {
   done()
 }
 
-export function openBrowser() {
-  return src(__filename)
-    .pipe(open({uri: 'http://localhost:8080'}))
-}
 
-export function css() {
+export const css = () => {
   return src(paths.css)
     .pipe(stylus())
     .pipe(dest(paths.dist))
     .pipe(reload())
 }
 
-export function cssMinify() {
+export const cssMinify = () => {
   return src(paths.css)
     .pipe(stylus({
       compress: true
@@ -54,7 +49,7 @@ export function cssMinify() {
     .pipe(dest(paths.dist))
 }
 
-export function html() {
+export const html = () => {
   return src(paths.html.pug)
     .pipe(pug({ pretty: true }))
     .pipe(inject(src(paths.html.inject, {
@@ -67,7 +62,7 @@ export function html() {
     .pipe(reload())
 }
 
-export function htmlMinify() {
+export const htmlMinify = () => {
   return src(paths.html.pug)
     .pipe(pug({ pretty: false }))
     .pipe(inject(src(paths.html.inject, {
@@ -79,7 +74,7 @@ export function htmlMinify() {
     .pipe(dest(paths.dist))
 }
 
-export function js() {
+export const js = () => {
   return src(paths.js, { sourcemaps: false })
     .pipe(babel({
       presets: ['@babel/env']
@@ -88,7 +83,7 @@ export function js() {
     .pipe(reload())
 }
 
-export function jsMinify() {
+export const jsMinify = () => {
   return src(paths.js, { sourcemaps: false })
     .pipe(babel({
       presets: ['@babel/env']
@@ -97,14 +92,14 @@ export function jsMinify() {
     .pipe(dest(paths.dist, { sourcemaps: false }))
 }
 
-export function imgMinify() {
+export const imgMinify = () => {
   return src('src/assets/**/*')
     .pipe(imagemin())
     .pipe(dest(`${paths.dist}/assets`))
     .pipe(reload())
 }
 
-export function watchDev(done) {
+export const watchDev = (done) => {
   watch(paths.watchFiles, series(clean, css, js, imgMinify, html))
   done()
 }
